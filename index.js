@@ -110,6 +110,26 @@ async function run() {
             const order = await cursor.toArray();
             res.json(order)
         })
+        // total order admin
+
+        app.get('/orders', async (req, res) => {
+
+            // console.log(req.query)
+            const email = req.query;
+            const cursor = orderCollection.find(email);
+            const order = await cursor.toArray();
+            res.json(order)
+        })
+
+        // delete
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            // console.log('deleteing id ', id)
+            const query = { _id: ObjectId(id) };
+            const result = await orderCollection.deleteOne(query);
+
+            res.json(result)
+        })
 
         // review
 
@@ -131,16 +151,8 @@ async function run() {
             const review = await cursor.toArray();
             res.json(review)
         });
-        // total order admin
 
-        app.get('/orders', async (req, res) => {
 
-            // console.log(req.query)
-            const email = req.query;
-            const cursor = orderCollection.find(email);
-            const order = await cursor.toArray();
-            res.json(order)
-        })
 
 
 
